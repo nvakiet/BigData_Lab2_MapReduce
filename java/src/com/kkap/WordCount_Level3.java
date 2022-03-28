@@ -23,7 +23,7 @@ public class WordCount_Level3 {
     private static       HashSet<String> blacklist = new HashSet<>();
     private static final String          fileName  = "stop_words.txt";
 
-    public static void initStopWords() {
+    public static void initBlacklist() {
         try {
             BufferedReader in = new BufferedReader(new FileReader(fileName));
             String         str;
@@ -72,7 +72,7 @@ public class WordCount_Level3 {
 
     public static void main(String[] args) throws Exception {
 
-        initStopWords();
+        initBlacklist();
 
         Job job = Job.getInstance(new Configuration(), "WordCount_Level1");
         job.setJarByClass(WordCount_Level3.class);
