@@ -23,7 +23,6 @@ class MCOWordCount(MRJob, ABC):
         # change to lower case
         clean_words = ''.join(' ' if c in string.punctuation else c for c in line)\
             .encode("ascii", "ignore").decode("unicode-escape") \
-            .replace('\\s\\d+\\s', ' ')\
             .lower()
 
         for word in clean_words.split():

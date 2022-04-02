@@ -2,18 +2,18 @@ from abc import ABC
 
 from mrjob.job import MRJob
 import string
+import re
 
 
 # distinct upper and lower case letters
 class DULWordCount(MRJob, ABC):
-    # this is the mapper funcetion
+    # this is the mapper function
     def mapper(self, _, line):
         # clean word by removing punctuation and number
         # clean \u
         clean_words = ''.join(' ' if c in string.punctuation else c for c in line) \
-            .encode("ascii", "ignore")\
-            .decode("unicode-escape")\
-            .replace('\\s\\d+\\s', ' ')
+            .encode("ascii", "ignore") \
+            .decode("unicode-escape") \
 
         # split words by whitespace
         for word in clean_words.split():
