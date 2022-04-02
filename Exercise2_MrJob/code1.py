@@ -15,6 +15,9 @@ class DULWordCount(MRJob, ABC):
             .encode("ascii", "ignore") \
             .decode("unicode-escape") \
 
+        # remove non-alphabet characters
+        clean_words = re.sub('\\b\\d+\\b', ' ', clean_words)
+
         # split words by whitespace
         for word in clean_words.split():
             yield word, 1

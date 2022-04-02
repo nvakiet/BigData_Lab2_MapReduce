@@ -3,6 +3,7 @@ from abc import ABC
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 import string
+import re
 
 
 # find most current word in a file
@@ -25,6 +26,10 @@ class MCOWordCount(MRJob, ABC):
             .encode("ascii", "ignore").decode("unicode-escape") \
             .lower()
 
+        # remove non-alphabet characters
+        clean_words = re.sub('\\b\\d+\\b', ' ', clean_words)
+
+        # split the line into words
         for word in clean_words.split():
             yield word, 1
 

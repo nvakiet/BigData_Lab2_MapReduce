@@ -2,6 +2,7 @@ from abc import ABC
 
 from mrjob.job import MRJob
 import string
+import re
 
 
 # no distinct upper and lower case letters
@@ -13,6 +14,9 @@ class NDULWordCount(MRJob, ABC):
         clean_words = ''.join(' ' if c in string.punctuation else c for c in line)\
             .encode("ascii", "ignore").decode("unicode-escape") \
             .lower()
+
+        # remove non-alphabet characters
+        clean_words = re.sub('\\b\\d+\\b', ' ', clean_words)
 
         # split into words
         for word in clean_words.split():
