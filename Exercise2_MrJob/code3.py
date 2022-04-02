@@ -18,9 +18,13 @@ class MCOWordCount(MRJob, ABC):
 
     # mapper: read in the data and split it into words
     def mapper_get_words(self, _, line):
-        clean_words = ''.join(' ' if c in string.punctuation else c for c in line)
-        clean_words = clean_words.replace(u"\u2019", " ")
-        clean_words = clean_words.lower()
+        # remove punctuation
+        # clean \u2019
+        # change to lower case
+        clean_words = ''.join(' ' if c in string.punctuation + '0123456789' else c for c in line)\
+            .encode("ascii", "ignore").decode("unicode-escape")\
+            .lower()
+
         for word in clean_words.split():
             yield word, 1
 

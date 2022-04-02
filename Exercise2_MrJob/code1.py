@@ -6,12 +6,13 @@ import string
 
 # distinct upper and lower case letters
 class DULWordCount(MRJob, ABC):
-    # this is the mapper function
+    # this is the mapper funcetion
     def mapper(self, _, line):
-        # clean word by removing punctuation
-        clean_words = ''.join(' ' if c in string.punctuation else c for c in line)
-        # clean \u2019
-        clean_words = clean_words.replace(u"\u2019", " ")
+        # clean word by removing punctuation and number
+        # clean \u
+        clean_words = ''.join(' ' if c in string.punctuation + '0123456789' else c for c in line)\
+            .encode("ascii", "ignore").decode("unicode-escape")
+
         # split words by whitespace
         for word in clean_words.split():
             yield word, 1
