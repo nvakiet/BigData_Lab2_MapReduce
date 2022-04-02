@@ -10,8 +10,9 @@ class NDULWordCount(MRJob, ABC):
         # remove punctuation
         # clean \u2019
         # change to lower case
-        clean_words = ''.join(' ' if c in string.punctuation + '0123456789' else c for c in line)\
-            .encode("ascii", "ignore").decode("unicode-escape")\
+        clean_words = ''.join(' ' if c in string.punctuation else c for c in line)\
+            .encode("ascii", "ignore").decode("unicode-escape") \
+            .replace('\s\d+\s', ' ')\
             .lower()
 
         # split into words

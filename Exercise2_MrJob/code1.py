@@ -10,8 +10,10 @@ class DULWordCount(MRJob, ABC):
     def mapper(self, _, line):
         # clean word by removing punctuation and number
         # clean \u
-        clean_words = ''.join(' ' if c in string.punctuation + '0123456789' else c for c in line)\
-            .encode("ascii", "ignore").decode("unicode-escape")
+        clean_words = ''.join(' ' if c in string.punctuation else c for c in line) \
+            .encode("ascii", "ignore")\
+            .decode("unicode-escape")\
+            .replace('\s\d+\s', ' ')
 
         # split words by whitespace
         for word in clean_words.split():
