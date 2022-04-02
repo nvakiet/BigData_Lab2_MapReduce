@@ -13,7 +13,7 @@ class DULWordCount(MRJob, ABC):
         clean_words = ''.join(' ' if c in string.punctuation else c for c in line) \
             .encode("ascii", "ignore")\
             .decode("unicode-escape")\
-            .replace('\s\d+\s', ' ')
+            .replace('\\s\\d+\\s', ' ')
 
         # split words by whitespace
         for word in clean_words.split():
